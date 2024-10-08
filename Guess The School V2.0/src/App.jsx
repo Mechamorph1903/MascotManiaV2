@@ -8,17 +8,25 @@ function App() {
   const [currentStreak, setCurrentStreak] = useState(0);
   const [longestStreak, setLongestStreak] = useState(0);
 
+  let answerBox = document.getElementById('answer-box');
+
   const handleCardClick = () => {
+    if(answerBox.value !== ''){
     setIsFlipped(!isFlipped);
+    } else {
+      alert('Please enter a guess before flipping the card!');
+    }
   };
 
  const updateCard = () => {
     // setCount(Math.floor(Math.random() * 12));
     if (count === 11) {
       // setCount(0);
+      answerBox.value = '';
       alert('You have reached the end of the deck! Restart?');
     } else {
     setCount(count + 1);
+    answerBox.value = '';
     }
 
     if(isFlipped === true){
@@ -33,6 +41,7 @@ function App() {
       alert('You have reached the beginning of the deck!');
     } else {
       setCount(count - 1);
+      answerBox.value = '';
     }
 
     if(isFlipped === true){
@@ -41,16 +50,22 @@ function App() {
   };
 
   const guessAnswer = () => {
-    let answer = document.getElementById('answer-box').value.toLowerCase();
+    let answer = answerBox.value.toLowerCase();
     let mascotName = Schools[count].mascot.toLowerCase();
+
+    answerBox.className = '';
     if (mascotName.startsWith(answer)) {
       alert('Correct!');
       setCurrentStreak(currentStreak + 1);
+      answerBox.classList.add('correct');
     } else {
       alert('Incorrect! The correct answer is ' + Schools[count].mascot);
       let temp = currentStreak;
-    setLongestStreak(temp);
+      if (temp > longestStreak){
+        setLongestStreak(temp);
+      }
       setCurrentStreak(0);
+      answerBox.classList.add('wrong');
     }
   };
 
@@ -147,7 +162,7 @@ function App() {
       <div className='Header'>
       <h1>Mascot Mania!</h1>
       <h4>In this app, you are going to guess Colleges based on their Mascot. Are you Mascot-Savvy?</h4>
-      <h6>Number of cards: 10</h6>
+      <h6>Number of cards: {Schools.length}</h6>
       <span className='scores'><h5>Current Streak: {currentStreak}</h5><h5>Longest Streak: {longestStreak}</h5></span>
       </div>
       <div className='cards'>

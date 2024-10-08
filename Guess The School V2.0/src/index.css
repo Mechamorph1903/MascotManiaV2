@@ -137,3 +137,14 @@ button:focus-visible {
 .scores > h5{
   margin-right: 10px;
 }
+
+.correct{
+  background-color: green;
+  color: white;
+
+}
+
+.wrong{
+  background-color: red;
+  color: white;
+}
