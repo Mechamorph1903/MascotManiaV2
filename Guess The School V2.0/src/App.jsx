@@ -23,7 +23,7 @@ function App() {
     if (count === 11) {
       // setCount(0);
       answerBox.value = '';
-      alert('You have reached the end of the deck! Restart?');
+      alert('You have reached the end of the deck! Restart using the restart button!');
     } else {
     setCount(count + 1);
     answerBox.value = '';
@@ -54,7 +54,7 @@ function App() {
     let mascotName = Schools[count].mascot.toLowerCase();
 
     answerBox.className = '';
-    if (mascotName.startsWith(answer)) {
+    if (answer.length >= 4 && mascotName.includes(answer)) {
       alert('Correct!');
       setCurrentStreak(currentStreak + 1);
       answerBox.classList.add('correct');
@@ -177,6 +177,11 @@ function App() {
       </form>
       <button onClick={updateCardBack}>Previous</button>
       <button onClick={updateCard}>Next</button>
+      <button onClick={() => {
+        setCurrentStreak(0);
+        setCount(0);
+        answerBox.value = '';
+      }}>restart</button>
     </div>
   );
 }
