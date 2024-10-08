@@ -49,9 +49,23 @@ function App() {
     }
   };
 
+ const shuffleCardOrder = () => {
+  let shuffledSchools = [...schools];
+
+  // Fisher-Yates shuffle algorithm
+  for (let i = shuffledSchools.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffledSchools[i], shuffledSchools[j]] = [shuffledSchools[j], shuffledSchools[i]];
+  }
+
+  // Update the state with the shuffled array
+  setSchools(shuffledSchools);
+  setCount(0); // Reset the count 
+  };
+
   const guessAnswer = () => {
     let answer = answerBox.value.toLowerCase();
-    let mascotName = Schools[count].mascot.toLowerCase();
+    let mascotName = schools[count].mascot.toLowerCase();
 
     answerBox.className = '';
     if (answer.length >= 4 && mascotName.includes(answer)) {
@@ -59,7 +73,7 @@ function App() {
       setCurrentStreak(currentStreak + 1);
       answerBox.classList.add('correct');
     } else {
-      alert('Incorrect! The correct answer is ' + Schools[count].mascot);
+      alert('Incorrect! The correct answer is ' + schools[count].mascot);
       let temp = currentStreak;
       if (temp > longestStreak){
         setLongestStreak(temp);
@@ -69,7 +83,7 @@ function App() {
     }
   };
 
-  const Schools = [
+  const [schools, setSchools]= useState([
    {
       name: "The University of Southern Mississippi",
       mascot: "Seymour the Golden Eagle",
@@ -154,7 +168,7 @@ function App() {
       mascot: "Sebastian the Ibis",
       color: "linear-gradient(to right, #F47727,#085536)"
     }
-  ]
+  ]);
   
 
   return (
@@ -162,11 +176,12 @@ function App() {
       <div className='Header'>
       <h1>Mascot Mania!</h1>
       <h4>In this app, you are going to guess Colleges based on their Mascot. Are you Mascot-Savvy?</h4>
-      <h6>Number of cards: {Schools.length}</h6>
+      <h6>Number of cards: {schools.length}</h6>
       <span className='scores'><h5>Current Streak: {currentStreak}</h5><h5>Longest Streak: {longestStreak}</h5></span>
+      <button onClick={shuffleCardOrder}>🔀</button>
       </div>
       <div className='cards'>
-        <Cards school={Schools[count]} clicker={handleCardClick} isFlipped={isFlipped}/>
+        <Cards school={schools[count]} clicker={handleCardClick} isFlipped={isFlipped}/>
       </div>
       <form className='container'>
         <input type="text" name="" id="answer-box" placeholder='Mascot Name...'/>
