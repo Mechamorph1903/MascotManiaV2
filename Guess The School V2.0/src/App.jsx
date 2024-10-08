@@ -178,7 +178,7 @@ function App() {
       <h4>In this app, you are going to guess Colleges based on their Mascot. Are you Mascot-Savvy?</h4>
       <h6>Number of cards: {schools.length}</h6>
       <span className='scores'><h5>Current Streak: {currentStreak}</h5><h5>Longest Streak: {longestStreak}</h5></span>
-      <button onClick={shuffleCardOrder}>🔀</button>
+      <button onClick={shuffleCardOrder} className='buttons' id='shuffle'>Shuffle🔀</button>
       </div>
       <div className='cards'>
         <Cards school={schools[count]} clicker={handleCardClick} isFlipped={isFlipped}/>
@@ -190,13 +190,17 @@ function App() {
           guessAnswer();
         }}>Guess Answer</button>
       </form>
-      <button onClick={updateCardBack}>Previous</button>
-      <button onClick={updateCard}>Next</button>
-      <button onClick={() => {
+     <div className='buttons-container'>
+     <div id='prev-next'>
+     <button onClick={updateCardBack} className='buttons'>Previous</button>
+     <button onClick={updateCard} className='button'>Next</button>
+     </div>
+      <button  className='buttons' onClick={() => {
         setCurrentStreak(0);
         setCount(0);
         answerBox.value = '';
       }}>restart</button>
+     </div>
     </div>
   );
 }
