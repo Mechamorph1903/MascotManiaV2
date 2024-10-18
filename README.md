@@ -42,7 +42,7 @@ GIF created with ...
 ## Notes
 
 Describe any challenges encountered while building the app.
-couldn't implement mastered list, will do so in future
+ - Couldn't implement mastered list, will do so in future
 
 ## License
 
